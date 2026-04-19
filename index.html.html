@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Portafolio | Sistema Biométrico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --b50:#E8F4FF;--b100:#BAD9F9;--b400:#3B82F6;--b600:#1D4ED8;--b800:#1E3A6E;
+  --t50:#E0F7F1;--t400:#14B8A6;--t600:#0F766E;--t800:#0D4F49;
+  --p50:#F0EEFF;--p400:#8B5CF6;--p600:#7C3AED;--p800:#3B1F7A;
+  --a50:#FFFBEB;--a400:#F59E0B;--a600:#D97706;
+  --g50:#ECFDF5;--g400:#22C55E;--g600:#15803D;
+  --r50:#FEF2F2;--r400:#EF4444;--r600:#DC2626;
+  --gray50:#F8FAFC;--gray100:#F1F5F9;--gray200:#E2E8F0;--gray300:#CBD5E1;
+  --gray400:#94A3B8;--gray500:#64748B;--gray600:#475569;--gray700:#334155;--gray800:#1E293B;--gray900:#0F172A;
+}
+body{font-family:'Inter',sans-serif;background:#EEF2FF;color:var(--gray800);min-height:100vh}
+nav{background:var(--b800);position:sticky;top:0;z-index:100;padding:0 2rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-icon{width:30px;height:30px;background:var(--t400);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-icon svg{width:16px;height:16px;fill:white}
+.nav-title{color:white;font-size:14px;font-weight:600}
+.nav-title span{color:#93C5FD;font-weight:400}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:#BAD9F9;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:6px;transition:all .15s}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,.14);color:white}
+.hero{background:var(--b800);padding:3.5rem 2rem 4.5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;background:#1D4ED8;border-radius:50%;opacity:.3}
+.hero::after{content:'';position:absolute;bottom:-90px;left:8%;width:260px;height:260px;background:var(--t600);border-radius:50%;opacity:.2}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#93C5FD;font-size:11px;font-weight:500;padding:4px 13px;border-radius:20px;margin-bottom:1.25rem;letter-spacing:.4px}
+.hero h1{color:white;font-size:clamp(22px,3.5vw,36px);font-weight:700;line-height:1.2;margin-bottom:.6rem;max-width:680px}
+.hero h1 span{color:var(--t400)}
+.hero-sub{color:#93C5FD;font-size:14px;margin-bottom:2.5rem}
+.hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.hero-card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:.875rem 1rem}
+.hc-label{color:#93C5FD;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.hc-val{color:white;font-size:14px;font-weight:600}
+.team-strip{background:white;border-bottom:1px solid var(--gray200);padding:.75rem 2rem}
+.team-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.team-label{font-size:11px;color:var(--gray500);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.team-members{display:flex;gap:8px;flex-wrap:wrap}
+.mc{display:flex;align-items:center;gap:6px;background:var(--gray100);border:1px solid var(--gray200);border-radius:20px;padding:3px 11px 3px 3px}
+.mc-av{width:22px;height:22px;border-radius:50%;font-size:8px;font-weight:700;color:white;display:flex;align-items:center;justify-content:center}
+.av1{background:var(--b600)}.av2{background:var(--p600)}.av3{background:var(--t600)}
+.mc span{font-size:12px;color:var(--gray700);font-weight:500}
+.date-pill{margin-left:auto;background:var(--b50);color:var(--b800);border:1px solid var(--b100);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600}
+.page{max-width:1100px;margin:0 auto;padding:2rem 2rem 4rem;display:grid;grid-template-columns:210px 1fr;gap:2rem;align-items:start}
+.sidebar{position:sticky;top:72px}
+.sidebar-box{background:white;border:1px solid var(--gray200);border-radius:13px;overflow:hidden}
+.sb-head{padding:.625rem 1rem;background:var(--gray50);border-bottom:1px solid var(--gray200);font-size:10px;font-weight:700;color:var(--gray500);text-transform:uppercase;letter-spacing:.8px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:.6rem 1rem;font-size:13px;color:var(--gray600);cursor:pointer;border-left:3px solid transparent;border-bottom:1px solid var(--gray100);transition:all .15s}
+.sb-item:last-child{border-bottom:none}
+.sb-item:hover{background:var(--b50);color:var(--b600)}
+.sb-item.active{background:var(--b50);color:var(--b800);font-weight:600;border-left-color:var(--b600)}
+.sb-dot{width:7px;height:7px;border-radius:50%;background:var(--gray300);flex-shrink:0}
+.sb-item.active .sb-dot{background:var(--b600)}
+.sb-item:hover .sb-dot{background:var(--b400)}
+.content section{display:none}
+.content section.active{display:block}
+.sec-hd{margin-bottom:1.5rem}
+.sec-hd h2{font-size:21px;font-weight:700;color:var(--gray900);margin-bottom:.2rem}
+.sec-hd p{font-size:13px;color:var(--gray500)}
+.sec-bar{width:36px;height:3px;background:var(--b600);border-radius:2px;margin-top:7px}
+.card{background:white;border:1px solid var(--gray200);border-radius:13px;padding:1.125rem 1.375rem;margin-bottom:1.125rem}
+.card-title{font-size:13px;font-weight:700;color:var(--gray800);margin-bottom:.875rem;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.4px}
+.ci{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-b{background:var(--b50)}.ci-t{background:var(--t50)}.ci-p{background:var(--p50)}.ci-a{background:var(--a50)}.ci-g{background:var(--g50)}
+.ci svg{width:13px;height:13px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.125rem;margin-bottom:1.125rem}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.125rem}
+.stat{background:white;border:1px solid var(--gray200);border-radius:13px;padding:1rem 1.125rem}
+.stat-lbl{font-size:10px;color:var(--gray500);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.stat-val{font-size:24px;font-weight:700;line-height:1;margin-bottom:3px}
+.stat-sub{font-size:11px;color:var(--gray400)}
+.sv-b{color:var(--b600)}.sv-t{color:var(--t600)}.sv-g{color:var(--g600)}.sv-p{color:var(--p600)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--gray50);font-weight:600;color:var(--gray600);text-align:left;padding:8px 11px;border-bottom:1px solid var(--gray200);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:8px 11px;border-bottom:1px solid var(--gray100);color:var(--gray700);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--gray50)}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.bb{background:var(--b50);color:var(--b800)}.bt{background:var(--t50);color:var(--t800)}.bg{background:var(--g50);color:var(--g600)}.ba{background:var(--a50);color:var(--a600)}.br{background:var(--r50);color:var(--r600)}.bp{background:var(--p50);color:var(--p800)}.bgray{background:var(--gray100);color:var(--gray600)}
+.feat-list{list-style:none}
+.feat-list li{display:flex;align-items:flex-start;gap:9px;padding:5px 0;font-size:13px;color:var(--gray700);border-bottom:1px solid var(--gray100);line-height:1.5}
+.feat-list li:last-child{border-bottom:none}
+.feat-list li::before{content:'';width:6px;height:6px;background:var(--b400);border-radius:50%;margin-top:5px;flex-shrink:0}
+.gantt-row{display:grid;grid-template-columns:165px 1fr;gap:10px;align-items:center;margin-bottom:6px}
+.g-lbl{font-size:11px;color:var(--gray600);text-align:right}
+.g-track{height:19px;background:var(--gray100);border-radius:4px;position:relative}
+.g-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;position:absolute;top:0}
+.g-txt{font-size:10px;color:white;font-weight:600}
+.g-axis{display:grid;grid-template-columns:repeat(12,1fr);padding-left:175px;margin-top:5px}
+.g-axis span{font-size:10px;color:var(--gray400);text-align:center}
+.kpi-track{height:7px;background:var(--gray100);border-radius:4px;overflow:hidden;margin-top:7px}
+.kpi-fill{height:100%;border-radius:4px}
+.risk-hi{color:var(--r600);font-weight:600}.risk-md{color:var(--a600);font-weight:600}.risk-lo{color:var(--g600);font-weight:600}
+.q-item{border-left:3px solid var(--b400);padding:.825rem 1rem .825rem 1.125rem;margin-bottom:.875rem;background:var(--b50);border-radius:0 10px 10px 0}
+.q-num{font-size:10px;font-weight:700;color:var(--b600);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.q-text{font-size:13px;font-weight:600;color:var(--gray800);margin-bottom:6px}
+.q-ans{font-size:13px;color:var(--gray600);line-height:1.65}
+.git-steps{display:flex;flex-direction:column;gap:7px}
+.git-step{display:flex;gap:11px;align-items:flex-start;background:var(--gray50);border:1px solid var(--gray200);border-radius:9px;padding:.7rem .9rem}
+.git-num{width:22px;height:22px;border-radius:50%;background:var(--b600);color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.git-step p{font-size:13px;color:var(--gray700);line-height:1.5}
+code{background:var(--gray200);color:var(--b800);padding:1px 5px;border-radius:4px;font-size:11px;font-family:monospace}
+.fin-row{display:grid;grid-template-columns:1fr auto auto;gap:1rem;padding:8px 0;border-bottom:1px solid var(--gray100);font-size:13px;align-items:center}
+.fin-row:last-child{border-bottom:none;font-weight:700}
+.fneg{color:var(--r600);font-weight:600}.fpos{color:var(--g600);font-weight:600}
+.dot-ok{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--g400);margin-right:5px}
+.dot-pend{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--a400);margin-right:5px}
+footer{background:var(--b800);color:#93C5FD;text-align:center;padding:2rem;font-size:12px;margin-top:2rem}
+footer strong{color:white}
+@media(max-width:768px){.page{grid-template-columns:1fr}.sidebar{position:static}.sidebar-box{display:flex;overflow-x:auto;border-radius:9px}.sb-item{flex-shrink:0;border-left:none;border-bottom:3px solid transparent}.sb-item.active{border-left:none;border-bottom-color:var(--b600)}.grid2,.grid4{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+      <span class="nav-title">E-Portafolio — Sistema Biométrico &nbsp;<span>| Grupo #5</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#" onclick="go('intro',this);return false" class="active">Inicio</a>
+      <a href="#" onclick="go('planif',this);return false">Planificación</a>
+      <a href="#" onclick="go('presup',this);return false">Presupuesto</a>
+      <a href="#" onclick="go('riesgos',this);return false">Riesgos</a>
+      <a href="#" onclick="go('kpis',this);return false">KPIs</a>
+      <a href="#" onclick="go('calidad',this);return false">Calidad</a>
+      <a href="#" onclick="go('cuestionario',this);return false">Cuestionario</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">E-Portafolio Digital · Formulación y Desarrollo de Proyectos de Tecnología · 2026</div>
+    <h1>Sistema de Control de Asistencia <span>Biométrico</span></h1>
+    <p class="hero-sub">Plan de proyecto unificado — planificación, calidad, riesgos y seguimiento con indicadores KPI</p>
+    <div class="hero-cards">
+      <div class="hero-card"><div class="hc-label">Duración</div><div class="hc-val">12 días</div></div>
+      <div class="hero-card"><div class="hc-label">Presupuesto total</div><div class="hc-val">Lps. 35,400</div></div>
+      <div class="hero-card"><div class="hc-label">Retorno VPN</div><div class="hc-val">Lps. 22,800 ✓</div></div>
+      <div class="hero-card"><div class="hc-label">TIR</div><div class="hc-val">36%</div></div>
+      <div class="hero-card"><div class="hc-label">Catedrático</div><div class="hc-val" style="font-size:12px">Herbert E. Webster Q.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="team-strip">
+  <div class="team-inner">
+    <span class="team-label">Integrantes</span>
+    <div class="team-members">
+      <div class="mc"><div class="mc-av av1">HAN</div><span>Hugo Aquino · 120450092</span></div>
+      <div class="mc"><div class="mc-av av2">OGN</div><span>Osman Núñez · 124280051</span></div>
+      <div class="mc"><div class="mc-av av3">BMM</div><span>Brayan Martínez · 323140009</span></div>
+    </div>
+    <span class="date-pill">19 / Abril / 2026</span>
+  </div>
+</div>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-box">
+      <div class="sb-head">Secciones</div>
+      <div class="sb-item active" onclick="go('intro',this)"><div class="sb-dot"></div>Introducción</div>
+      <div class="sb-item" onclick="go('planif',this)"><div class="sb-dot"></div>Planificación</div>
+      <div class="sb-item" onclick="go('presup',this)"><div class="sb-dot"></div>Presupuesto</div>
+      <div class="sb-item" onclick="go('riesgos',this)"><div class="sb-dot"></div>Matriz de riesgos</div>
+      <div class="sb-item" onclick="go('kpis',this)"><div class="sb-dot"></div>Indicadores KPI</div>
+      <div class="sb-item" onclick="go('calidad',this)"><div class="sb-dot"></div>Plan de calidad</div>
+      <div class="sb-item" onclick="go('cuestionario',this)"><div class="sb-dot"></div>Cuestionario</div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section id="intro" class="active">
+      <div class="sec-hd"><h2>Descripción del proyecto</h2><p>Objetivo, alcance, requisitos y justificación del sistema</p><div class="sec-bar"></div></div>
+      <div class="grid2">
+        <div class="stat" style="border-top:3px solid var(--b600)">
+          <div class="stat-lbl">Objetivo general</div>
+          <div style="font-size:14px;font-weight:600;color:var(--b800);line-height:1.5;margin-top:4px">Desarrollar un plan de proyecto unificado para el diseño de un sistema biométrico de control de asistencia</div>
+        </div>
+        <div class="stat" style="border-top:3px solid var(--t600)">
+          <div class="stat-lbl">Problema que resuelve</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t800);line-height:1.5;margin-top:4px">Eliminar errores, pérdidas de información y fraudes del registro manual de asistencia</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="ci ci-b"><svg viewBox="0 0 24 24" fill="#1D4ED8"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Requisitos funcionales</div>
+        <ul class="feat-list">
+          <li>Registro de empleados dentro de la base de datos del sistema</li>
+          <li>Registro de asistencia mediante dispositivo biométrico de huella digital</li>
+          <li>Almacenamiento automático de hora de entrada y salida de cada empleado</li>
+          <li>Consulta del historial de asistencia por empleado y rango de fechas</li>
+          <li>Generación de reportes de asistencia para el área administrativa y RRHH</li>
+          <li>Acceso al panel de administración mediante usuario y contraseña</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="ci ci-t"><svg viewBox="0 0 24 24" fill="#0F766E"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Requisitos no funcionales</div>
+        <ul class="feat-list">
+          <li>Seguridad de la información almacenada en la base de datos</li>
+          <li>Interfaz intuitiva y fácil de usar para administradores y usuarios finales</li>
+          <li>Base de datos confiable con acceso rápido a los registros</li>
+          <li>Operatividad correcta dentro de la red interna de la empresa</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="ci ci-a"><svg viewBox="0 0 24 24" fill="#D97706"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Límites del proyecto</div>
+        <ul class="feat-list">
+          <li>Propuesta estructurada — no incluye el desarrollo completo del software</li>
+          <li>Adquisición del hardware biométrico presentada solo como estimación presupuestal</li>
+          <li>Sin integración con sistemas de nómina u otras plataformas empresariales</li>
+          <li>El proyecto tiene fines académicos y demostrativos</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="planif">
+      <div class="sec-hd"><h2>Planificación del proyecto</h2><p>EDT, cronograma Gantt y equipo de trabajo</p><div class="sec-bar"></div></div>
+      <div class="card">
+        <div class="card-title">EDT — Estructura de desglose del trabajo</div>
+        <table>
+          <thead><tr><th>#</th><th>Actividad</th><th>Responsable</th><th>Duración</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge bb">01</span></td><td>Análisis del problema</td><td>Analista de sistemas</td><td>2 días</td></tr>
+            <tr><td><span class="badge bb">02</span></td><td>Definición de requisitos</td><td>Analista de sistemas</td><td>2 días</td></tr>
+            <tr><td><span class="badge bp">03</span></td><td>Diseño del sistema</td><td>Diseñador de software</td><td>3 días</td></tr>
+            <tr><td><span class="badge bt">04</span></td><td>Elaboración de EDT</td><td>Jefe de proyecto</td><td>1 día</td></tr>
+            <tr><td><span class="badge bt">05</span></td><td>Planificación del cronograma</td><td>Jefe de proyecto</td><td>1 día</td></tr>
+            <tr><td><span class="badge ba">06</span></td><td>Estimación de recursos</td><td>Equipo del proyecto</td><td>1 día</td></tr>
+            <tr><td><span class="badge ba">07</span></td><td>Elaboración de documentación</td><td>Equipo del proyecto</td><td>2 días</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Diagrama de Gantt — 12 días</div>
+        <div style="padding:.375rem 0">
+          <div class="gantt-row"><span class="g-lbl">Análisis del problema</span><div class="g-track"><div class="g-fill" style="left:0;width:16.7%;background:var(--b400)"><span class="g-txt">2d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Def. de requisitos</span><div class="g-track"><div class="g-fill" style="left:16.7%;width:16.7%;background:var(--p400)"><span class="g-txt">2d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Diseño del sistema</span><div class="g-track"><div class="g-fill" style="left:33.4%;width:25%;background:var(--t400)"><span class="g-txt">3d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Elaboración EDT</span><div class="g-track"><div class="g-fill" style="left:58.4%;width:8.3%;background:var(--a400)"><span class="g-txt">1d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Plan. cronograma</span><div class="g-track"><div class="g-fill" style="left:66.7%;width:8.3%;background:var(--a400)"><span class="g-txt">1d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Estimación recursos</span><div class="g-track"><div class="g-fill" style="left:75%;width:8.3%;background:#EC4899"><span class="g-txt">1d</span></div></div></div>
+          <div class="gantt-row"><span class="g-lbl">Documentación</span><div class="g-track"><div class="g-fill" style="left:83.3%;width:16.7%;background:var(--gray500)"><span class="g-txt">2d</span></div></div></div>
+          <div class="g-axis"><span>D1</span><span>D2</span><span>D3</span><span>D4</span><span>D5</span><span>D6</span><span>D7</span><span>D8</span><span>D9</span><span>D10</span><span>D11</span><span>D12</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Equipo de trabajo</div>
+        <table>
+          <thead><tr><th>Rol</th><th>Función principal</th><th>Tarifa/día</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge bb">Jefe de proyecto</span></td><td>Coordinar actividades; supervisar cumplimiento del plan</td><td>Lps. 600</td></tr>
+            <tr><td><span class="badge bp">Analista de sistemas</span></td><td>Identificar y documentar requisitos del sistema</td><td>Lps. 500</td></tr>
+            <tr><td><span class="badge bt">Diseñador de software</span></td><td>Diseñar arquitectura del sistema y base de datos</td><td>Lps. 700</td></tr>
+            <tr><td><span class="badge bgray">Equipo de apoyo</span></td><td>Desarrollo, documentación y soporte técnico</td><td>Lps. 400</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="presup">
+      <div class="sec-hd"><h2>Presupuesto y evaluación financiera</h2><p>Costos de recursos, personal y análisis VPN/TIR</p><div class="sec-bar"></div></div>
+      <div class="grid4">
+        <div class="stat" style="border-top:3px solid var(--b400)"><div class="stat-lbl">Materiales</div><div class="stat-val sv-b">23,000</div><div class="stat-sub">Lempiras</div></div>
+        <div class="stat" style="border-top:3px solid var(--p400)"><div class="stat-lbl">Personal</div><div class="stat-val sv-p">6,500</div><div class="stat-sub">Lempiras</div></div>
+        <div class="stat" style="border-top:3px solid var(--t400)"><div class="stat-lbl">Costo directo</div><div class="stat-val sv-t">29,500</div><div class="stat-sub">Lempiras</div></div>
+        <div class="stat" style="border-top:3px solid var(--b600);background:var(--b50);border:1px solid var(--b100)"><div class="stat-lbl">Total con indirectos</div><div class="stat-val" style="color:var(--b800)">35,400</div><div class="stat-sub">+20% indirectos</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Recursos tecnológicos</div>
+          <table>
+            <thead><tr><th>Recurso</th><th>Costo</th></tr></thead>
+            <tbody>
+              <tr><td>Computadora</td><td>Lps. 18,000</td></tr>
+              <tr><td>Dispositivo biométrico</td><td>Lps. 4,000</td></tr>
+              <tr><td>Red interna</td><td>Lps. 1,000</td></tr>
+              <tr><td>Base de datos (libre)</td><td>Lps. 0</td></tr>
+              <tr><td><strong>Subtotal</strong></td><td><strong>Lps. 23,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-title">Costo de personal</div>
+          <table>
+            <thead><tr><th>Actividad</th><th>Costo</th></tr></thead>
+            <tbody>
+              <tr><td>Análisis (2d × Analista)</td><td>Lps. 1,000</td></tr>
+              <tr><td>Requisitos (2d × Analista)</td><td>Lps. 1,000</td></tr>
+              <tr><td>Diseño (3d × Diseñador)</td><td>Lps. 2,100</td></tr>
+              <tr><td>EDT + Cronograma (Jefe)</td><td>Lps. 1,200</td></tr>
+              <tr><td>Recursos + Docs (Equipo)</td><td>Lps. 1,200</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>Lps. 6,500</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Evaluación financiera — VPN &amp; TIR (tasa 10%)</div>
+        <p style="font-size:13px;color:var(--gray500);margin-bottom:1rem">Ahorro estimado: encargado de RRHH dedica 15% de su jornada al registro manual → Lps. 156,000 × 15% = <strong style="color:var(--g600)">Lps. 23,400/año</strong>.</p>
+        <div class="fin-row"><span>Año 0 — Inversión total del proyecto</span><span></span><span class="fneg">−Lps. 35,400</span></div>
+        <div class="fin-row"><span>Año 1 — Ahorro inicial</span><span style="font-size:11px;color:var(--gray400)">menos errores, menos tiempo en listas</span><span class="fpos">+Lps. 23,400</span></div>
+        <div class="fin-row"><span>Año 2 — Eficiencia media</span><span style="font-size:11px;color:var(--gray400)">reportes automáticos, menos fraudes</span><span class="fpos">+Lps. 23,400</span></div>
+        <div class="fin-row"><span>Año 3 — Eficiencia plena</span><span style="font-size:11px;color:var(--gray400)">sistema maduro, control total</span><span class="fpos">+Lps. 23,400</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.125rem">
+          <div style="background:var(--g50);border:1px solid #BBF7D0;border-radius:12px;padding:1rem;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--g600);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">VPN (tasa 10%)</div>
+            <div style="font-size:28px;font-weight:700;color:var(--g600)">Lps. 22,800</div>
+            <div style="font-size:12px;color:var(--g600);margin-top:2px">✓ Proyecto rentable</div>
+          </div>
+          <div style="background:var(--b50);border:1px solid var(--b100);border-radius:12px;padding:1rem;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--b600);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">TIR</div>
+            <div style="font-size:28px;font-weight:700;color:var(--b600)">36%</div>
+            <div style="font-size:12px;color:var(--b600);margin-top:2px">Tasa interna de retorno</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="riesgos">
+      <div class="sec-hd"><h2>Matriz de riesgos</h2><p>Identificación, probabilidad, impacto y medidas preventivas</p><div class="sec-bar"></div></div>
+      <div class="card">
+        <table style="table-layout:fixed">
+          <thead><tr><th style="width:24%">Riesgo</th><th style="width:10%">Prob.</th><th style="width:10%">Impacto</th><th style="width:56%">Medida preventiva</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge bb">Técnico</span><br><span style="font-size:12px;color:var(--gray600)">Fallo integración biométrico–BD</span></td><td><span class="badge ba">Media</span></td><td><span class="risk-hi">Alto</span></td><td style="font-size:12px">Pruebas piloto antes del lanzamiento; plan de contingencia con registro manual temporal</td></tr>
+            <tr><td><span class="badge bp">Externo</span><br><span style="font-size:12px;color:var(--gray600)">Resistencia al cambio del personal</span></td><td><span class="badge br">Alta</span></td><td><span class="risk-md">Medio</span></td><td style="font-size:12px">Capacitación previa al lanzamiento; comunicación clara de los beneficios del sistema</td></tr>
+            <tr><td><span class="badge bt">Operacional</span><br><span style="font-size:12px;color:var(--gray600)">Problemas eléctricos o de red</span></td><td><span class="badge bg">Baja</span></td><td><span class="risk-hi">Alto</span></td><td style="font-size:12px">Instalar UPS para proteger el equipo; verificar estabilidad de la red antes de implementar</td></tr>
+            <tr><td><span class="badge bgray">Recursos</span><br><span style="font-size:12px;color:var(--gray600)">Retrasos en el cronograma</span></td><td><span class="badge ba">Media</span></td><td><span class="risk-md">Medio</span></td><td style="font-size:12px">Monitoreo semanal con KPIs; redistribución de tareas si se detectan atrasos</td></tr>
+            <tr><td><span class="badge ba">Datos</span><br><span style="font-size:12px;color:var(--gray600)">Pérdida o corrupción de datos</span></td><td><span class="badge bg">Baja</span></td><td><span class="risk-hi" style="color:var(--p600)">Crítico</span></td><td style="font-size:12px">Backups automáticos diarios; almacenamiento redundante; pruebas de restauración periódicas</td></tr>
+            <tr><td><span class="badge br">Seguridad</span><br><span style="font-size:12px;color:var(--gray600)">Acceso no autorizado a datos</span></td><td><span class="badge ba">Media</span></td><td><span class="risk-hi">Alto</span></td><td style="font-size:12px">Encriptación de datos biométricos; credenciales seguras; cumplimiento normativo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="kpis">
+      <div class="sec-hd"><h2>Indicadores KPI del proyecto</h2><p>Métricas de seguimiento y desempeño</p><div class="sec-bar"></div></div>
+      <div class="grid2">
+        <div class="stat" style="border-top:3px solid var(--b400)">
+          <div class="stat-lbl">Avance del proyecto</div>
+          <div class="stat-val sv-b" style="font-size:19px">En proceso</div>
+          <div class="kpi-track"><div class="kpi-fill" style="width:55%;background:var(--b400)"></div></div>
+          <div class="stat-sub" style="margin-top:5px">Meta: 100% al cierre · frecuencia semanal</div>
+        </div>
+        <div class="stat" style="border-top:3px solid var(--g400)">
+          <div class="stat-lbl">Nivel de errores en pruebas</div>
+          <div class="stat-val" style="font-size:19px;color:var(--g600)">Cumplido ✓</div>
+          <div class="kpi-track"><div class="kpi-fill" style="width:92%;background:var(--g400)"></div></div>
+          <div class="stat-sub" style="margin-top:5px">Meta: menos del 5% · por sprint</div>
+        </div>
+        <div class="stat" style="border-top:3px solid var(--t400)">
+          <div class="stat-lbl">Cumplimiento del presupuesto</div>
+          <div class="stat-val sv-t" style="font-size:19px">Cumplido ✓</div>
+          <div class="kpi-track"><div class="kpi-fill" style="width:88%;background:var(--t400)"></div></div>
+          <div class="stat-sub" style="margin-top:5px">Meta: no superar el 100% · mensual</div>
+        </div>
+        <div class="stat" style="border-top:3px solid var(--a400)">
+          <div class="stat-lbl">Precisión lector biométrico</div>
+          <div class="stat-val" style="font-size:19px;color:var(--a600)">Por medir</div>
+          <div class="kpi-track"><div class="kpi-fill" style="width:20%;background:var(--a400)"></div></div>
+          <div class="stat-sub" style="margin-top:5px">Meta: mayor al 98% · por prueba piloto</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tabla completa de KPIs</div>
+        <table>
+          <thead><tr><th>Indicador</th><th>Fórmula</th><th>Responsable</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>Avance del proyecto</td><td><code>(Completadas / Total) × 100</code></td><td>Equipo</td><td><span class="badge ba">En proceso</span></td></tr>
+            <tr><td>Cumplimiento cronograma</td><td><code>(Act. completadas / Planif.) × 100</code></td><td>Jefe de proyecto</td><td><span class="badge ba">En proceso</span></td></tr>
+            <tr><td>Nivel de errores</td><td><code>(Errores / Total pruebas) × 100</code></td><td>Diseñador</td><td><span class="badge bg">Cumplido</span></td></tr>
+            <tr><td>Cumplimiento presupuesto</td><td><code>(Costo real / Estimado) × 100</code></td><td>Jefe de proyecto</td><td><span class="badge bg">Cumplido</span></td></tr>
+            <tr><td>Precisión biométrica</td><td><code>(Reg. correctos / Total) × 100</code></td><td>Equipo</td><td><span class="badge bgray">Por medir</span></td></tr>
+            <tr><td>Satisfacción del usuario</td><td><code>Promedio calificaciones (1–5)</code></td><td>RRHH</td><td><span class="badge bgray">Por medir</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="calidad">
+      <div class="sec-hd"><h2>Plan de calidad</h2><p>Objetivos, criterios de aceptación, roles y control de versiones</p><div class="sec-bar"></div></div>
+      <div class="card">
+        <div class="card-title"><div class="ci ci-b"><svg viewBox="0 0 24 24" fill="#1D4ED8"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>Objetivos de calidad</div>
+        <ul class="feat-list">
+          <li>Tasa de reconocimiento de huella dactilar superior al 98%</li>
+          <li>Cero duplicados ni registros incorrectos en la base de datos</li>
+          <li>Cero errores manuales que afecten reportes generados para RRHH</li>
+          <li>Cumplimiento del 100% de requerimientos funcionales y no funcionales</li>
+          <li>Seguridad de datos: acceso protegido con usuario y contraseña</li>
+          <li>Calificación mínima de 4/5 en pruebas de usabilidad con usuarios finales</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Criterios de aceptación</div>
+        <table>
+          <thead><tr><th>Criterio</th><th>Estándar mínimo</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>Registro de entradas y salidas</td><td>100% sin error</td><td><span class="dot-pend"></span><span class="badge ba">Por verificar</span></td></tr>
+            <tr><td>Tiempo de respuesta del lector</td><td>Menor a 3 segundos</td><td><span class="dot-pend"></span><span class="badge ba">Por verificar</span></td></tr>
+            <tr><td>Disponibilidad del sistema</td><td>99% en horario laboral</td><td><span class="dot-ok"></span><span class="badge bt">Definido</span></td></tr>
+            <tr><td>Seguridad de acceso</td><td>Panel protegido con credenciales</td><td><span class="dot-ok"></span><span class="badge bt">Definido</span></td></tr>
+            <tr><td>Facilidad de uso</td><td>Mínimo 4/5 en pruebas</td><td><span class="dot-pend"></span><span class="badge ba">Por verificar</span></td></tr>
+            <tr><td>Generación de reportes</td><td>Reportes precisos para RRHH</td><td><span class="dot-pend"></span><span class="badge ba">Por verificar</span></td></tr>
+            <tr><td>Respaldo de información</td><td>Backup automático diario</td><td><span class="dot-ok"></span><span class="badge bt">Definido</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Roles y responsabilidades en calidad</div>
+        <table>
+          <thead><tr><th>Rol</th><th>Responsabilidades</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge bb">Jefe de proyecto</span></td><td style="font-size:12px">Supervisar el Plan de Calidad; aprobar cambios; revisar KPIs semanalmente y tomar decisiones correctivas</td></tr>
+            <tr><td><span class="badge bp">Analista</span></td><td style="font-size:12px">Verificar que los requerimientos se implementen correctamente; validar pruebas de integración</td></tr>
+            <tr><td><span class="badge bt">Diseñador</span></td><td style="font-size:12px">Realizar pruebas unitarias por módulo; corregir errores detectados en el código</td></tr>
+            <tr><td><span class="badge bgray">Equipo de apoyo</span></td><td style="font-size:12px">Instalar y configurar el hardware biométrico; verificar conectividad de la red interna</td></tr>
+            <tr><td><span class="badge bg">Usuarios RRHH</span></td><td style="font-size:12px">Reportar fallas durante pruebas; validar que los reportes generados sean correctos</td></tr>
+            <tr><td><span class="badge ba">Administrador</span></td><td style="font-size:12px">Gestionar accesos y permisos; supervisar la ejecución de los backups automáticos</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Control de versiones — Flujo GitFlow</div>
+        <div class="git-steps">
+          <div class="git-step"><div class="git-num">1</div><p>Repositorio central en <strong>GitHub</strong> con acceso controlado para cada miembro, usando ramas separadas por rol y módulo.</p></div>
+          <div class="git-step"><div class="git-num">2</div><p>Rama <code>main</code> protegida — solo el Jefe de Proyecto puede aprobar y ejecutar fusiones a esta rama.</p></div>
+          <div class="git-step"><div class="git-num">3</div><p>Ramas de desarrollo por módulo: <code>feature/modulo-asistencia</code>, <code>feature/modulo-reportes</code>, etc.</p></div>
+          <div class="git-step"><div class="git-num">4</div><p>Commits con convención: <code>tipo(scope): descripción</code> — ejemplo: <code>fix(lector): corregir fallo de reconocimiento en baja luz</code></p></div>
+          <div class="git-step"><div class="git-num">5</div><p><strong>Pull Requests</strong> obligatorios con revisión de al menos un compañero antes de fusionar cambios a <code>main</code>.</p></div>
+          <div class="git-step"><div class="git-num">6</div><p>Evaluación de impacto obligatoria antes de cambios que afecten la base de datos o la interfaz de usuario.</p></div>
+          <div class="git-step"><div class="git-num">7</div><p>Bitácora de cambios documentada con <strong>fecha, autor, descripción y justificación</strong> de cada modificación.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cuestionario">
+      <div class="sec-hd"><h2>Cuestionario — Calidad y configuración</h2><p>Respuestas fundamentadas con ejemplos del proyecto biométrico</p><div class="sec-bar"></div></div>
+      <div class="q-item"><div class="q-num">Pregunta 1</div><div class="q-text">¿Qué es un plan de calidad y por qué es importante en un proyecto de software?</div><div class="q-ans">Es un documento formal que define los estándares, procedimientos, recursos y responsabilidades para garantizar que el software cumpla los requisitos establecidos. Es importante porque establece criterios objetivos de éxito y evita improvisaciones costosas. En el proyecto, el plan define que el lector debe reconocer huellas con al menos 98% de precisión — sin ese criterio no habría forma objetiva de decidir si el sistema está listo para implementarse.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 2</div><div class="q-text">¿Cuál es la diferencia entre control de calidad y aseguramiento de calidad?</div><div class="q-ans">El aseguramiento de calidad (QA) verifica que los procesos correctos se sigan para prevenir defectos. El control de calidad (QC) inspecciona el producto para detectar y corregir defectos existentes. En el proyecto: QA sería verificar que el equipo haga pruebas unitarias después de cada módulo; QC sería ejecutar las pruebas del lector con empleados reales y medir la tasa de reconocimiento para detectar fallos concretos.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 3</div><div class="q-text">¿Qué son los KPIs y cómo se aplican en la gestión de calidad?</div><div class="q-ans">Son métricas cuantificables para evaluar el desempeño del proyecto respecto a sus objetivos. Permiten decisiones basadas en datos reales. Ejemplo: el KPI "tasa de errores = (errores / total pruebas) × 100" tiene meta de menos del 5%. Si al ejecutar 50 pruebas se encuentran 8 errores, la tasa es 16%, lo que activa automáticamente una revisión del módulo afectado antes de continuar.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 4</div><div class="q-text">¿Qué es la gestión de configuración y qué herramientas se utilizan?</div><div class="q-ans">Es el proceso de identificar, registrar y controlar versiones de todos los componentes del sistema (código, base de datos, documentación). Mantiene la integridad del sistema y facilita el trabajo colaborativo. Herramientas: Git (control distribuido), GitHub/GitLab (repositorios remotos). En el proyecto se usa Git + GitHub con ramas separadas por módulo para controlar todos los cambios del código y la documentación.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 5</div><div class="q-text">¿Cómo se controlan los cambios en un proyecto de software?</div><div class="q-ans">Proceso formal de 6 pasos: (1) Identificación del cambio necesario, (2) Análisis del impacto en tiempo, costo y funcionalidad, (3) Aprobación del Jefe de Proyecto, (4) Implementación en rama separada de Git, (5) Revisión por pares mediante Pull Request, (6) Documentación en bitácora con fecha, autor y justificación.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 6</div><div class="q-text">¿Qué riesgos de calidad pueden presentarse en un proyecto biométrico?</div><div class="q-ans">Los principales son: (a) baja tasa de reconocimiento por suciedad o características físicas del empleado; (b) pérdida de datos por fallos de hardware; (c) vulnerabilidades de seguridad que permitan acceso no autorizado; (d) resistencia de usuarios que lleve al abandono del sistema; (e) incompatibilidad técnica entre el lector adquirido y el software desarrollado.</div></div>
+      <div class="q-item"><div class="q-num">Pregunta 7</div><div class="q-text">¿Por qué es importante el control de versiones en proyectos de software?</div><div class="q-ans">Por cuatro razones: (1) permite recuperar versiones anteriores cuando se introduce un error grave; (2) facilita el trabajo colaborativo sin sobreescribir cambios de otros; (3) provee historial trazable de quién cambió qué y cuándo; (4) permite versiones paralelas (desarrollo, pruebas, producción) de forma ordenada. Sin Git, coordinar al analista, diseñador y equipo de apoyo generaría conflictos constantes y pérdidas de código.</div></div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Sistema Biométrico de Control de Asistencia</strong> &nbsp;·&nbsp;
+  Formulación y Desarrollo de Proyectos de Tecnología &nbsp;·&nbsp; Grupo #5 &nbsp;·&nbsp; Abril 2026<br>
+  <span style="opacity:.6">Hugo Aquino · Osman Núñez · Brayan Martínez &nbsp;|&nbsp; Catedrático: Herbert Edson Webster Quintero</span>
+</footer>
+
+<script>
+const SEC_MAP={intro:'Inicio',planif:'Planificación',presup:'Presupuesto',riesgos:'Riesgos',kpis:'KPIs',calidad:'Calidad',cuestionario:'Cuestionario'};
+const SB_MAP={intro:'Introducción',planif:'Planificación',presup:'Presupuesto',riesgos:'Matriz de riesgos',kpis:'Indicadores KPI',calidad:'Plan de calidad',cuestionario:'Cuestionario'};
+function go(id,el){
+  document.querySelectorAll('.content section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(s=>{if(s.textContent.trim()===SB_MAP[id])s.classList.add('active')});
+  document.querySelectorAll('.nav-links a').forEach(a=>{if(a.textContent.trim()===SEC_MAP[id])a.classList.add('active')});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
